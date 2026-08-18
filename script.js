@@ -72,6 +72,78 @@ document.querySelectorAll('.map-node, .ship-node').forEach(node => node.addEvent
     routeDetail.classList.add('route-flash');
 }));
 
+const planetData = {
+    mercury: { name: 'Mercury', description: 'A fast, cratered world where daylight burns and shadow freezes.', time: '3 months', risk: 'High', window: 'Open in 18 days', temp: '167°C' },
+    mars: { name: 'Mars', description: 'A red-world expedition through ancient riverbeds and towering dust fronts.', time: '7 months', risk: 'Moderate', window: 'Open now', temp: '−63°C' },
+    europa: { name: 'Europa', description: 'A frozen ocean world with a hidden sea beneath fractured ice.', time: '6 years', risk: 'High', window: 'Open in 4 months', temp: '−160°C' },
+    titan: { name: 'Titan', description: 'Amber haze, methane rain, and shorelines carved by alien chemistry.', time: '7 years', risk: 'Extreme', window: 'Open in 2 years', temp: '−179°C' }
+};
+let selectedPlanet = 'mars';
+let savedDestinations = JSON.parse(localStorage.getItem('orbital-destinations') || '[]');
+const commandTitle = document.querySelector('#command-title');
+const commandDescription = document.querySelector('#command-description');
+const commandTime = document.querySelector('#command-time');
+const commandRisk = document.querySelector('#command-risk');
+const commandWindow = document.querySelector('#command-window');
+const favoriteButton = document.querySelector('#favorite-button');
+
+function updateCommandPanel() {
+    const planet = planetData[selectedPlanet];
+    commandTitle.textContent = planet.name;
+    commandDescription.textContent = planet.description;
+    commandTime.textContent = planet.time;
+    commandRisk.textContent = planet.risk;
+    commandWindow.textContent = planet.window;
+    favoriteButton.innerHTML = `${savedDestinations.includes(selectedPlanet) ? 'Saved destination' : 'Save destination'} <span>${savedDestinations.includes(selectedPlanet) ? '★' : '☆'}</span>`;
+    document.querySelectorAll('.system-planet').forEach(item => item.classList.toggle('selected', item.dataset.planet === selectedPlanet));
+}
+
+document.querySelectorAll('.system-planet').forEach(planet => planet.addEventListener('click', () => {
+    selectedPlanet = planet.dataset.planet;
+    updateCommandPanel();
+}));
+favoriteButton.addEventListener('click', () => {
+    savedDestinations = savedDestinations.includes(selectedPlanet) ? savedDestinations.filter(item => item !== selectedPlanet) : [...savedDestinations, selectedPlanet];
+    localStorage.setItem('orbital-destinations', JSON.stringify(savedDestinations));
+    updateCommandPanel();
+});
+
+function updateComparison() {
+    const first = planetData[document.querySelector('#compare-one').value];
+    const second = planetData[document.querySelector('#compare-two').value];
+    document.querySelector('#comparison-result').innerHTML = `<div><span>Travel time</span><b>${first.name}: ${first.time}</b><b>${second.name}: ${second.time}</b></div><div><span>Surface temperature</span><b>${first.name}: ${first.temp}</b><b>${second.name}: ${second.temp}</b></div><div><span>Risk profile</span><b>${first.name}: ${first.risk}</b><b>${second.name}: ${second.risk}</b></div>`;
+}
+document.querySelectorAll('#compare-one, #compare-two').forEach(select => select.addEventListener('change', updateComparison));
+updateComparison();
+
+document.querySelector('#planner-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const destination = document.querySelector('#planner-destination').value;
+    const payload = document.querySelector('#planner-payload').value.toLowerCase();
+    const planet = Object.values(planetData).find(item => item.name === destination);
+    document.querySelector('#planner-result').textContent = `OR-${Math.floor(Math.random() * 80 + 20)} ready: ${payload} on ${destination}. Transit estimate ${planet.time}.`;
+});
+
+let soundEnabled = false;
+let audioContext;
+document.querySelector('#sound-toggle').addEventListener('click', event => {
+    soundEnabled = !soundEnabled;
+    event.currentTarget.setAttribute('aria-pressed', String(soundEnabled));
+    event.currentTarget.innerHTML = `${soundEnabled ? 'Sound on' : 'Sound off'} <span>${soundEnabled ? '◉' : '◌'}</span>`;
+    if (soundEnabled) {
+        audioContext = audioContext || new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.frequency.value = 480;
+        gain.gain.setValueAtTime(.04, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + .22);
+        oscillator.connect(gain).connect(audioContext.destination);
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + .22);
+    }
+});
+updateCommandPanel();
+
 let secondsRemaining = 4 * 60 * 60 + 18 * 60 + 32;
 const countdown = document.querySelector('#countdown');
 setInterval(() => {

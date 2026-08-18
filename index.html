@@ -16,6 +16,7 @@
         </a>
         <nav class="topnav" aria-label="Primary navigation">
             <a href="#missions">Missions</a>
+            <a href="#command">Command</a>
             <a href="#explorer">Explorer</a>
             <a href="#briefing">Briefing</a>
         </nav>
@@ -69,6 +70,24 @@
                     <button class="ship-node ship-solace" data-route="solace" type="button" aria-label="Inspect Solace Array spacecraft">SA</button>
                 </div>
                 <div class="route-detail" id="route-detail"><p class="eyebrow">SELECTED ROUTE</p><h3 id="route-title">Asteria IX <em>/ AX-09</em></h3><p id="route-copy">Blue-moon survey craft currently crossing the Helios relay on a high-inclination route.</p><div class="route-data"><span><b id="route-distance">384M km</b>Distance from Sol</span><span><b id="route-status">● Active</b>Mission status</span></div><button class="button button-primary" id="route-action" type="button">Open mission log <span>→</span></button></div>
+            </div>
+        </section>
+
+        <section class="command-section section-shell" id="command">
+            <div class="section-heading"><div><p class="eyebrow">ORBITAL COMMAND</p><h2>Choose your next horizon</h2></div><button class="button button-quiet" id="sound-toggle" type="button" aria-pressed="false">Sound off <span>◌</span></button></div>
+            <div class="command-layout">
+                <div class="system-map" aria-label="Interactive solar system map">
+                    <div class="system-sun">SOL</div><div class="system-orbit system-orbit-one"></div><div class="system-orbit system-orbit-two"></div><div class="system-orbit system-orbit-three"></div>
+                    <button class="system-planet planet-mercury" data-planet="mercury" type="button" aria-label="Select Mercury">M</button>
+                    <button class="system-planet planet-mars" data-planet="mars" type="button" aria-label="Select Mars">M</button>
+                    <button class="system-planet planet-europa" data-planet="europa" type="button" aria-label="Select Europa">E</button>
+                    <button class="system-planet planet-titan" data-planet="titan" type="button" aria-label="Select Titan">T</button>
+                </div>
+                <div class="command-panel"><p class="eyebrow">DESTINATION LOCK</p><div class="command-title"><h3 id="command-title">Mars</h3><span id="command-status">AVAILABLE</span></div><p id="command-description">A red-world expedition through ancient riverbeds and towering dust fronts.</p><div class="command-facts"><div><span>Travel time</span><strong id="command-time">7 months</strong></div><div><span>Risk level</span><strong id="command-risk">Moderate</strong></div><div><span>Best window</span><strong id="command-window">Open now</strong></div></div><button class="button button-primary" id="favorite-button" type="button">Save destination <span>☆</span></button></div>
+            </div>
+            <div class="command-tools">
+                <div class="compare-tool"><div><p class="eyebrow">WORLD COMPARISON</p><h3>Put two worlds side by side.</h3></div><div class="compare-controls"><select id="compare-one" aria-label="First world"><option value="mars">Mars</option><option value="europa">Europa</option><option value="titan">Titan</option><option value="mercury">Mercury</option></select><span>vs</span><select id="compare-two" aria-label="Second world"><option value="europa">Europa</option><option value="mars">Mars</option><option value="titan">Titan</option><option value="mercury">Mercury</option></select></div><div class="comparison-result" id="comparison-result"></div></div>
+                <form class="planner-tool" id="planner-form"><p class="eyebrow">MISSION BUILDER</p><h3>Design a mission profile.</h3><label for="planner-destination">Destination</label><select id="planner-destination"><option>Mars</option><option>Europa</option><option>Titan</option><option>Mercury</option></select><label for="planner-payload">Payload focus</label><select id="planner-payload"><option>Search for life</option><option>Map the surface</option><option>Collect samples</option><option>Deploy a relay</option></select><button class="button button-primary" type="submit">Generate profile <span>↗</span></button><p class="planner-result" id="planner-result" aria-live="polite"></p></form>
             </div>
         </section>
 
