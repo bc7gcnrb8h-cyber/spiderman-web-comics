@@ -242,6 +242,34 @@ const signalMessages = [
     'Solace Array mirrors are holding formation.',
     'Lumen Drift sample capsule is on a stable trajectory.'
 ];
+const academyContent = {
+    rockets: [
+        { icon: 'SV', code: 'SATURN V', title: 'Saturn V', text: 'The giant launch vehicle that carried Apollo astronauts toward the Moon. Its three stages built the speed needed to leave Earth.', label: 'Heavy-lift launch vehicle' },
+        { icon: 'F9', code: 'FALCON 9', title: 'Falcon 9', text: 'A partially reusable rocket designed to carry satellites and crew. Its first stage can return and land for another flight.', label: 'Reusable orbital rocket' },
+        { icon: 'JW', code: 'ARIANE 5', title: 'Ariane 5', text: 'A powerful European launcher that placed many scientific spacecraft into orbit, including the James Webb Space Telescope.', label: 'Science mission launcher' }
+    ],
+    missions: [
+        { icon: 'AP', code: 'APOLLO 11', title: 'Apollo 11', text: 'In 1969, humans landed on the Moon for the first time. The mission combined a Saturn V, lunar module, and precise navigation.', label: 'First crewed lunar landing' },
+        { icon: 'JW', code: 'JWST', title: 'James Webb', text: 'The James Webb Space Telescope studies distant galaxies and exoplanet atmospheres using infrared light beyond Earth\'s atmosphere.', label: 'Deep-space observatory' },
+        { icon: 'VG', code: 'VOYAGER 1', title: 'Voyager 1', text: 'Launched in 1977, Voyager 1 visited the outer planets and continues sending faint signals from interstellar space.', label: 'Longest-distance explorer' }
+    ],
+    facts: [
+        { icon: '01', code: 'ORBIT', title: 'Falling forever', text: 'An orbiting spacecraft is constantly falling toward a planet, but it moves sideways fast enough to keep missing it.', label: 'Orbital mechanics' },
+        { icon: '02', code: 'LIGHT', title: 'Looking back in time', text: 'Light takes time to travel. When we see a distant galaxy, we are seeing it as it was millions or billions of years ago.', label: 'Cosmic perspective' },
+        { icon: '03', code: 'SOUND', title: 'Silent space', text: 'Sound needs matter to travel, so explosions in the vacuum of space would be visually dramatic but completely silent.', label: 'The vacuum' }
+    ]
+};
+const factMessages = ['A rocket accelerates by throwing mass in the opposite direction.', 'One day on Venus is longer than one Venusian year.', 'Mars sunsets can appear blue because of the way dust scatters light.', 'The International Space Station circles Earth roughly every 90 minutes.'];
+function renderAcademy(topic) {
+    document.querySelector('#academy-grid').innerHTML = academyContent[topic].map(card => `<article class="academy-card" data-code="${card.code}"><div class="academy-icon">${card.icon}</div><h3>${card.title}</h3><p>${card.text}</p><small>${card.label}</small></article>`).join('');
+}
+document.querySelectorAll('.academy-tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.academy-tab').forEach(item => { item.classList.toggle('active', item === tab); item.setAttribute('aria-selected', String(item === tab)); });
+    renderAcademy(tab.dataset.academy);
+}));
+let factIndex = 0;
+document.querySelector('#next-fact').addEventListener('click', () => { factIndex = (factIndex + 1) % factMessages.length; document.querySelector('#academy-fact strong').textContent = factMessages[factIndex]; });
+renderAcademy('rockets');
 const signalStrip = document.querySelector('.signal-strip');
 const signalMessage = document.querySelector('#signal-message');
 const scanButton = document.querySelector('#scan-button');
