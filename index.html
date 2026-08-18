@@ -142,6 +142,11 @@
             <div class="academy-fact" id="academy-fact"><span class="fact-mark">?</span><div><p class="eyebrow">DID YOU KNOW?</p><strong>Rocketships do not “push against” space. They accelerate by throwing mass in the opposite direction.</strong></div><button class="button button-quiet" id="next-fact" type="button">New fact <span>↗</span></button></div>
         </section>
 
+        <section class="space-desk section-shell" id="space-desk">
+            <div class="section-heading"><div><p class="eyebrow">LIVE SPACE DESK</p><h2>What is happening up there?</h2></div><span class="section-note">Public data / updated on load</span></div>
+            <div class="desk-grid"><div class="launch-feed"><div class="desk-heading"><p class="eyebrow">UPCOMING LAUNCHES</p><span class="data-source">Launch Library 2</span></div><div id="live-launches"><div class="desk-loading">Connecting to launch network...</div></div></div><article class="apod-card" id="space-update"><div class="apod-image" id="apod-image"></div><div class="apod-copy"><p class="eyebrow">NASA IMAGE OF THE DAY</p><h3 id="apod-title">Loading today's cosmic picture...</h3><p id="apod-description">A fresh view from NASA will appear here when the connection is ready.</p><a id="apod-link" class="text-button" href="https://apod.nasa.gov/" target="_blank" rel="noreferrer">Open NASA feature <span>↗</span></a></div></article></div>
+        </section>
+
         <section class="explorer-section section-shell" id="explorer">
             <div class="section-heading"><div><p class="eyebrow">THE NEARBY UNKNOWN</p><h2>World explorer</h2></div><span class="section-note">Select a world to inspect</span></div>
             <div class="world-layout">
@@ -165,6 +170,6 @@
 
     <footer class="footer section-shell"><span>ORBITAL / 2026</span><span>Created by Jesse · <a href="https://www.instagram.com/jesselll19/" target="_blank" rel="noreferrer">@jesselll19</a></span><a href="#top">Return to top ↑</a></footer>
     <div class="modal" id="mission-modal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" type="button" aria-label="Close mission details">×</button><p class="eyebrow">SECURE TELEMETRY LINK</p><div class="drawer-heading"><div><h2 id="modal-title">Asteria IX</h2><p class="drawer-code" id="modal-code">AX-09 / ACTIVE</p></div><span class="drawer-status">● LIVE</span></div><p id="modal-copy"></p><div class="drawer-facts"><div><span>Objective</span><strong id="modal-objective">Ice canyon mapping</strong></div><div><span>Current position</span><strong id="modal-position">Helios relay 04</strong></div><div><span>Lead crew</span><strong id="modal-crew">Autonomous probe</strong></div></div><div class="telemetry-bars"><span style="--bar: 82%"><b>Fuel reserve</b><i></i></span><span style="--bar: 64%"><b>Signal clarity</b><i></i></span><span style="--bar: 91%"><b>Mission health</b><i></i></span></div><div class="drawer-timeline"><span class="done">Launch</span><span class="done">Cruise</span><span class="current">Survey</span><span>Return</span></div></div></div>
-    <script src="script.js?v=dashboard-10"></script>
+    <script src="script.js?v=live-space-11"></script>
 </body>
 </html>

@@ -286,6 +286,38 @@ document.querySelectorAll('.academy-tab').forEach(tab => tab.addEventListener('c
 let factIndex = 0;
 document.querySelector('#next-fact').addEventListener('click', () => { factIndex = (factIndex + 1) % factMessages.length; document.querySelector('#academy-fact strong').textContent = factMessages[factIndex]; });
 renderAcademy('rockets');
+
+function formatLaunchDate(value) {
+    return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(value));
+}
+
+async function loadSpaceDesk() {
+    const launchContainer = document.querySelector('#live-launches');
+    try {
+        const after = new Date().toISOString();
+        const response = await fetch(`https://ll.thespacedevs.com/2.2.0/launch/?limit=3&ordering=net&net__gte=${encodeURIComponent(after)}`);
+        if (!response.ok) throw new Error('Launch feed unavailable');
+        const launches = (await response.json()).results;
+        if (!launches.length) throw new Error('No upcoming launches');
+        launchContainer.innerHTML = launches.map(launch => `<article class="launch-item"><div class="launch-patch">${(launch.name || 'LIVE').slice(0, 2).toUpperCase()}</div><div><h3>${launch.name}</h3><p>${launch.launch_service_provider?.name || 'Launch network'} · ${launch.status?.name || 'Scheduled'}</p></div><time class="launch-date" datetime="${launch.net}">${formatLaunchDate(launch.net)}</time></article>`).join('');
+    } catch (error) {
+        launchContainer.innerHTML = '<article class="launch-item"><div class="launch-patch">GO</div><div><h3>Launch network standby</h3><p>Live launch data will reconnect shortly.</p></div><span class="launch-date">STANDBY</span></article>';
+    }
+
+    try {
+        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
+        if (!response.ok) throw new Error('NASA feed unavailable');
+        const apod = await response.json();
+        document.querySelector('#apod-title').textContent = apod.title || 'Today in the cosmos';
+        document.querySelector('#apod-description').textContent = apod.explanation ? `${apod.explanation.slice(0, 155)}...` : 'A new NASA perspective from across the universe.';
+        document.querySelector('#apod-link').href = apod.url || 'https://apod.nasa.gov/';
+        if (apod.media_type === 'image' && apod.url) document.querySelector('#apod-image').style.backgroundImage = `url("${apod.url}")`;
+    } catch (error) {
+        document.querySelector('#apod-title').textContent = 'NASA image feed on standby';
+        document.querySelector('#apod-description').textContent = 'Open the NASA feature link for the latest astronomy picture and explanation.';
+    }
+}
+loadSpaceDesk();
 const signalStrip = document.querySelector('.signal-strip');
 const signalMessage = document.querySelector('#signal-message');
 const scanButton = document.querySelector('#scan-button');
