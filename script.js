@@ -84,6 +84,7 @@ const planetData = {
     europa: { name: 'Europa', description: 'A frozen ocean world with a hidden sea beneath fractured ice.', time: '6 years', risk: 'High', window: 'Open in 4 months', temp: '−160°C' },
     titan: { name: 'Titan', description: 'Amber haze, methane rain, and shorelines carved by alien chemistry.', time: '7 years', risk: 'Extreme', window: 'Open in 2 years', temp: '−179°C' }
 };
+const planetScores = { mercury: 42, mars: 68, europa: 54, titan: 31 };
 let selectedPlanet = 'mars';
 let savedDestinations = JSON.parse(localStorage.getItem('orbital-destinations') || '[]');
 const commandTitle = document.querySelector('#command-title');
@@ -117,10 +118,18 @@ favoriteButton.addEventListener('click', () => {
 function updateComparison() {
     const first = planetData[document.querySelector('#compare-one').value];
     const second = planetData[document.querySelector('#compare-two').value];
-    document.querySelector('#comparison-result').innerHTML = `<div><span>Travel time</span><b>${first.name}: ${first.time}</b><b>${second.name}: ${second.time}</b></div><div><span>Surface temperature</span><b>${first.name}: ${first.temp}</b><b>${second.name}: ${second.temp}</b></div><div><span>Risk profile</span><b>${first.name}: ${first.risk}</b><b>${second.name}: ${second.risk}</b></div>`;
+    const firstKey = document.querySelector('#compare-one').value;
+    const secondKey = document.querySelector('#compare-two').value;
+    document.querySelector('#comparison-result').innerHTML = `<div><span>Travel time</span><b style="--score:${planetScores[firstKey]}%">${first.name}: ${first.time}</b><b style="--score:${planetScores[secondKey]}%">${second.name}: ${second.time}</b></div><div><span>Surface temperature</span><b>${first.name}: ${first.temp}</b><b>${second.name}: ${second.temp}</b></div><div><span>Risk profile</span><b>${first.name}: ${first.risk}</b><b>${second.name}: ${second.risk}</b></div>`;
+    const winner = planetScores[firstKey] >= planetScores[secondKey] ? first.name : second.name;
+    document.querySelector('#comparison-verdict').textContent = `${winner} has the stronger survey profile for a first expedition.`;
 }
 document.querySelectorAll('#compare-one, #compare-two').forEach(select => select.addEventListener('change', updateComparison));
 updateComparison();
+
+const budgetInput = document.querySelector('#planner-budget');
+const budgetValue = document.querySelector('#budget-value');
+budgetInput.addEventListener('input', () => { budgetValue.value = `${budgetInput.value}%`; budgetValue.textContent = `${budgetInput.value}%`; });
 
 document.querySelector('#planner-form').addEventListener('submit', event => {
     event.preventDefault();
@@ -128,7 +137,9 @@ document.querySelector('#planner-form').addEventListener('submit', event => {
     const payload = document.querySelector('#planner-payload').value.toLowerCase();
     const planet = Object.values(planetData).find(item => item.name === destination);
     const missionId = `OR-${Math.floor(Math.random() * 80 + 20)}`;
-    document.querySelector('#planner-result').innerHTML = `<span class="eyebrow">PROFILE ${missionId} / READY TO REVIEW</span><strong>${destination} expedition</strong><span>${payload} · ${planet.time} transit · ${planet.risk} risk</span>`;
+    const ambition = Number(budgetInput.value);
+    const readiness = ambition >= 75 ? 'Bold expedition' : ambition >= 45 ? 'Balanced expedition' : 'Reconnaissance flight';
+    document.querySelector('#planner-result').innerHTML = `<span class="eyebrow">PROFILE ${missionId} / READY TO REVIEW</span><strong>${readiness}: ${destination}</strong><span>${payload} · ${planet.time} transit · ${planet.risk} risk · ${ambition}% ambition</span>`;
 });
 
 let soundEnabled = false;
