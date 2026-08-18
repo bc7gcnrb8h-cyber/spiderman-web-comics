@@ -143,7 +143,10 @@ document.querySelectorAll('.comic-issue').forEach((issue, index) => {
     if (readBtn) {
         readBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            alert(`Issue #${247 - index}: Coming Soon! This interactive comic will be available soon.`);
+            const issueNumberEl = issue.querySelector('.issue-number');
+            const issueNumber = issueNumberEl ? issueNumberEl.textContent : `#${247 - index}`;
+            const issueTitle = issue.querySelector('h3') ? issue.querySelector('h3').textContent : 'Unknown';
+            alert(`${issueNumber}: ${issueTitle}\n\nThis interactive comic will be available soon! Stay tuned for the full story.`);
         });
     }
 });

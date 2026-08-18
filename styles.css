@@ -391,10 +391,153 @@ footer p {
     font-size: 0.95rem;
 }
 
+/* Custom Comic Section */
+.custom-comic-section {
+    margin: 60px 0 40px;
+    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+    padding: 40px 20px;
+    border: 4px solid #ffcc00;
+    border-radius: 8px;
+}
+
+.custom-comic-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    border: 4px solid #000;
+    box-shadow: 5px 5px 0px #ff0000, 10px 10px 0px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+}
+
+.comic-story-header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 3px solid #ff0000;
+    padding-bottom: 20px;
+}
+
+.comic-story-header h3 {
+    font-size: 2.5rem;
+    color: #ff0000;
+    text-shadow: 2px 2px 0px #ffcc00;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.story-subtitle {
+    color: #0066ff;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.comic-story-content {
+    margin: 30px 0;
+}
+
+.story-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fffacd;
+    border: 2px solid #000;
+    border-radius: 4px;
+}
+
+.story-section h4 {
+    color: #ff0000;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 0px #ffcc00;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.story-section p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.story-section p:last-child {
+    margin-bottom: 0;
+}
+
+.comic-action {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff0000;
+    text-shadow: 2px 2px 0px #ffcc00, 3px 3px 0px #000;
+    margin: 20px 0;
+    animation: pop 0.6s ease-in-out;
+}
+
+.comic-ending {
+    font-size: 1.8rem;
+    margin: 30px 0;
+}
+
+.story-moral {
+    background: linear-gradient(135deg, #ff0000, #0066ff);
+    color: white;
+    padding: 25px;
+    border: 3px solid #ffcc00;
+    border-radius: 4px;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.story-moral p {
+    margin: 0;
+}
+
+.story-moral strong {
+    font-size: 1.3rem;
+}
+
+.custom-comic-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #ff0000;
+    color: #333;
+}
+
+.rating-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.custom-comic-footer .rating {
+    font-size: 1.5rem;
+}
+
+.author-note {
+    color: #666;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-content h1.title {
         font-size: 2.5rem;
+    }
+    
+    .custom-comic-container {
+        padding: 20px;
+    }
+    
+    .comic-story-header h3 {
+        font-size: 1.8rem;
+    }
+    
+    .story-section {
+        padding: 15px;
     }
 
     .subtitle {
