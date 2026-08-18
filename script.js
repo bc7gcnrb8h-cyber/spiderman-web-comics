@@ -112,6 +112,7 @@ document.querySelectorAll('.system-planet').forEach(planet => planet.addEventLis
 favoriteButton.addEventListener('click', () => {
     savedDestinations = savedDestinations.includes(selectedPlanet) ? savedDestinations.filter(item => item !== selectedPlanet) : [...savedDestinations, selectedPlanet];
     localStorage.setItem('orbital-destinations', JSON.stringify(savedDestinations));
+    if (savedDestinations.includes(selectedPlanet)) unlockAchievement('save');
     updateCommandPanel();
 });
 
@@ -139,7 +140,9 @@ document.querySelector('#planner-form').addEventListener('submit', event => {
     const missionId = `OR-${Math.floor(Math.random() * 80 + 20)}`;
     const ambition = Number(budgetInput.value);
     const readiness = ambition >= 75 ? 'Bold expedition' : ambition >= 45 ? 'Balanced expedition' : 'Reconnaissance flight';
+    localStorage.setItem('orbital-latest-mission', JSON.stringify({ id: missionId, type: readiness, destination, payload, time: planet.time, risk: planet.risk, ambition }));
     document.querySelector('#planner-result').innerHTML = `<span class="eyebrow">PROFILE ${missionId} / READY TO REVIEW</span><strong>${readiness}: ${destination}</strong><span>${payload} · ${planet.time} transit · ${planet.risk} risk · ${ambition}% ambition</span>`;
+    refreshDashboard();
 });
 
 let soundEnabled = false;
@@ -172,6 +175,17 @@ const challengeStatus = document.querySelector('#challenge-status');
 const alertList = document.querySelector('#alert-list');
 const achievementState = JSON.parse(localStorage.getItem('orbital-achievements') || '[]');
 const badgeLabels = ['crew', 'launch', 'save', 'compare'];
+function refreshDashboard() {
+    const callSign = localStorage.getItem('orbital-call-sign');
+    const mission = JSON.parse(localStorage.getItem('orbital-latest-mission') || 'null');
+    const rank = achievementState.length >= 4 ? 'Legendary mission commander' : achievementState.length >= 2 ? 'Flight lead' : achievementState.length >= 1 ? 'Cadet explorer' : 'Unassigned crew';
+    document.querySelector('#dashboard-call-sign').textContent = callSign ? `Commander ${callSign}` : 'Unassigned crew';
+    document.querySelector('#dashboard-rank').textContent = rank;
+    document.querySelector('#dashboard-achievements').textContent = `${achievementState.length} / 4`;
+    document.querySelector('#dashboard-achievement-bar').style.width = `${achievementState.length * 25}%`;
+    document.querySelector('#dashboard-destinations').textContent = savedDestinations.length ? savedDestinations.map(item => planetData[item]?.name || item).join(' · ') : 'None yet';
+    if (mission) { document.querySelector('#dashboard-mission-title').textContent = `${mission.type}: ${mission.destination}`; document.querySelector('#dashboard-mission-copy').textContent = `${mission.payload} · ${mission.time} transit · ${mission.risk} risk · ${mission.ambition}% ambition`; document.querySelector('#dashboard-mission-id').textContent = `${mission.id} / READY TO REVIEW`; }
+}
 
 function unlockAchievement(name) {
     if (!achievementState.includes(name)) achievementState.push(name);
@@ -180,6 +194,7 @@ function unlockAchievement(name) {
     document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
     const rank = achievementState.length >= 4 ? 'Legendary mission commander' : achievementState.length >= 2 ? 'Flight lead' : achievementState.length >= 1 ? 'Cadet explorer' : 'Unassigned crew';
     document.querySelector('#rank-label').textContent = rank;
+    refreshDashboard();
 }
 
 function addAlert(message) {
@@ -225,6 +240,7 @@ document.querySelectorAll('#badges span').forEach((badge, index) => badge.classL
 document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
 const initialRank = achievementState.length >= 4 ? 'Legendary mission commander' : achievementState.length >= 2 ? 'Flight lead' : achievementState.length >= 1 ? 'Cadet explorer' : 'Unassigned crew';
 document.querySelector('#rank-label').textContent = initialRank;
+refreshDashboard();
 
 let secondsRemaining = 4 * 60 * 60 + 18 * 60 + 32;
 const countdown = document.querySelector('#countdown');
