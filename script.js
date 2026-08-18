@@ -60,6 +60,35 @@ setInterval(() => {
     countdown.textContent = `${hours}:${minutes}:${seconds}`;
 }, 1000);
 
+const signalMessages = [
+    'Asteria IX just crossed the Helios relay.',
+    'Europa probe returned a clean subsurface scan.',
+    'Solace Array mirrors are holding formation.',
+    'Lumen Drift sample capsule is on a stable trajectory.'
+];
+const signalStrip = document.querySelector('.signal-strip');
+const signalMessage = document.querySelector('#signal-message');
+const scanButton = document.querySelector('#scan-button');
+let signalIndex = 0;
+
+setInterval(() => {
+    signalIndex = (signalIndex + 1) % signalMessages.length;
+    signalMessage.textContent = signalMessages[signalIndex];
+}, 6000);
+
+scanButton.addEventListener('click', () => {
+    signalStrip.classList.add('scanning');
+    scanButton.disabled = true;
+    scanButton.innerHTML = 'Scanning sector... <span>◌</span>';
+    signalMessage.textContent = 'Sweeping the dark side of the system for new signals.';
+    setTimeout(() => {
+        signalStrip.classList.remove('scanning');
+        signalMessage.textContent = 'New signal acquired: Titan relay is online.';
+        scanButton.disabled = false;
+        scanButton.innerHTML = 'Run sensor sweep <span>↗</span>';
+    }, 1800);
+});
+
 const modal = document.querySelector('#mission-modal');
 const modalCopy = document.querySelector('#modal-copy');
 document.querySelectorAll('.mission-open').forEach(button => button.addEventListener('click', () => {
