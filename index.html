@@ -3,224 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spider-Man Comics</title>
+    <meta name="description" content="A cinematic interactive mission control dashboard for exploring the solar system.">
+    <title>ORBITAL // Mission Control</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1 class="title">🕷️ SPIDER-MAN 🕷️</h1>
-            <p class="subtitle">The Amazing Adventures of Your Friendly Neighborhood Hero</p>
-        </div>
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <header class="topbar">
+        <a class="brand" href="#top" aria-label="Orbital mission control home">
+            <span class="brand-mark">O</span>
+            <span>ORBITAL <small>MISSION CONTROL</small></span>
+        </a>
+        <nav class="topnav" aria-label="Primary navigation">
+            <a href="#missions">Missions</a>
+            <a href="#explorer">Explorer</a>
+            <a href="#briefing">Briefing</a>
+        </nav>
+        <div class="live-status"><span></span> Systems nominal</div>
     </header>
 
-    <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#comics">Comics</a>
-        <a href="#characters">Characters</a>
-        <a href="#gallery">Gallery</a>
-        <a href="comic.html" style="background: #ffcc00; color: #000; font-weight: bold;">📖 READ COMIC</a>
-    </nav>
-
-    <main>
-        <section id="home" class="hero-section">
-            <div class="comic-panel hero-panel">
-                <h2>THE STORY BEGINS</h2>
-                <p>
+    <main id="top">
+        <section class="hero section-shell">
+            <div class="hero-copy">
+                <p class="eyebrow">DEEP SPACE NETWORK / 07:42 UTC</p>
+                <h1>Go further<br><em>than the horizon.</em></h1>
+                <p class="hero-lede">A living dashboard for the missions, machines, and worlds expanding our map of the unknown.</p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#missions">Explore missions <span>↘</span></a>
+                    <button class="button button-quiet" id="briefing-button" type="button">Open daily briefing <span>→</span></button>
+                </div>
+            </div>
+            <div class="orbit-visual" aria-label="Animated orbital diagram of a planet and satellite">
+                <div class="orbit-ring orbit-ring-one"></div>
+                <div class="orbit-ring orbit-ring-two"></div>
+                <div class="planet-core"><span></span></div>
+                <div class="satellite satellite-one">◆</div>
+                <div class="satellite satellite-two">◇</div>
+                <div class="visual-caption"><span>LIVE TELEMETRY</span><strong>Kepler sector 04</strong></div>
+            </div>
         </section>
 
-        <section id="comics" class="comics-section">
-            <h2 class="section-title">LATEST ISSUES</h2>
-            <div class="comics-grid">
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#247</div>
-                        <h3>The Green Goblin Returns</h3>
-                        <p class="description">Spider-Man faces his greatest nemesis as the Green Goblin plans his most diabolical scheme yet!</p>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
+        <section class="metrics section-shell" aria-label="Mission metrics">
+            <div><span>Active missions</span><strong>08</strong></div>
+            <div><span>Distance traveled</span><strong>4.8B <small>km</small></strong></div>
+            <div><span>Signal strength</span><strong>98.4<small>%</small></strong></div>
+            <div><span>Next launch</span><strong id="countdown">04:18:32</strong></div>
+        </section>
 
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#246</div>
-                        <h3>Doc Ock's Laboratory</h3>
-                        <p class="description">Doctor Octopus has stolen advanced technology. Can Spider-Man stop him before it's too late?</p>
-                        <div class="rating">⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
+        <section class="content-section section-shell" id="missions">
+            <div class="section-heading">
+                <div><p class="eyebrow">FLIGHT DECK</p><h2>Mission log</h2></div>
+                <div class="filters" role="group" aria-label="Filter missions">
+                    <button class="filter active" data-filter="all" type="button">All</button>
+                    <button class="filter" data-filter="active" type="button">Active</button>
+                    <button class="filter" data-filter="complete" type="button">Complete</button>
                 </div>
+            </div>
+            <div class="mission-grid" id="mission-grid">
+                <article class="mission-card featured" data-status="active" data-mission="Asteria IX">
+                    <div class="card-visual visual-asteria"><span>AX</span><i>↗</i></div>
+                    <div class="card-body"><div class="card-meta"><span class="status active">● Active</span><span>AX-09</span></div><h3>Asteria IX</h3><p>Mapping the ice canyons of a blue moon before the long night begins.</p><button class="text-button mission-open" type="button">View telemetry <span>→</span></button></div>
+                </article>
+                <article class="mission-card" data-status="active" data-mission="Solace Array">
+                    <div class="card-visual visual-solace"><span>SA</span><i>↗</i></div>
+                    <div class="card-body"><div class="card-meta"><span class="status active">● Active</span><span>SA-03</span></div><h3>Solace Array</h3><p>Unfolding a solar mirror network at the edge of Mercury's shadow.</p><button class="text-button mission-open" type="button">View telemetry <span>→</span></button></div>
+                </article>
+                <article class="mission-card" data-status="complete" data-mission="Lumen Drift">
+                    <div class="card-visual visual-lumen"><span>LD</span><i>↗</i></div>
+                    <div class="card-body"><div class="card-meta"><span class="status complete">● Complete</span><span>LD-21</span></div><h3>Lumen Drift</h3><p>Seven years, three gravity assists, one pristine sample from deep space.</p><button class="text-button mission-open" type="button">View report <span>→</span></button></div>
+                </article>
+            </div>
+        </section>
 
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#245</div>
-                        <h3>Venom's Rage</h3>
-                        <p class="description">A mysterious symbiote awakens, and Spider-Man must confront his darkest fear incarnate!</p>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
+        <section class="explorer-section section-shell" id="explorer">
+            <div class="section-heading"><div><p class="eyebrow">THE NEARBY UNKNOWN</p><h2>World explorer</h2></div><span class="section-note">Select a world to inspect</span></div>
+            <div class="world-layout">
+                <div class="world-list" role="tablist" aria-label="World explorer">
+                    <button class="world-tab active" data-world="mars" role="tab" aria-selected="true" type="button"><span class="world-dot mars-dot"></span><span>Mars</span><small>04 probes</small></button>
+                    <button class="world-tab" data-world="europa" role="tab" aria-selected="false" type="button"><span class="world-dot europa-dot"></span><span>Europa</span><small>02 probes</small></button>
+                    <button class="world-tab" data-world="titan" role="tab" aria-selected="false" type="button"><span class="world-dot titan-dot"></span><span>Titan</span><small>01 probe</small></button>
                 </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#244</div>
-                        <h3>Aunt May's Secret</h3>
-                        <p class="description">A shocking revelation threatens to change everything Peter knows about his past.</p>
-                        <div class="rating">⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#243</div>
-                        <h3>Night of the Kingpin</h3>
-                        <p class="description">Wilson Fisk emerges from the shadows with a new criminal empire. Spider-Man must infiltrate the Kingpin's underground network.</p>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#242</div>
-                        <h3>The Web of Deception</h3>
-                        <p class="description">A mysterious hacker is selling stolen tech across the city. Spider-Man investigates and discovers a shocking connection to his past.</p>
-                        <div class="rating">⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#241</div>
-                        <h3>City Under Siege</h3>
-                        <p class="description">A new villain called Shadowstrike holds the city hostage. Spider-Man races against time to save thousands of lives.</p>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#240</div>
-                        <h3>Rise of the Clone</h3>
-                        <p class="description">An evil clone of Spider-Man appears, creating chaos throughout New York. Peter must prove his worth against his dark duplicate.</p>
-                        <div class="rating">⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
-                </div>
-
-                <div class="comic-card">
-                    <div class="comic-issue">
-                        <div class="issue-number">#239</div>
-                        <h3>The Last Patrol</h3>
-                        <p class="description">A final confrontation with a long-time enemy forces Spider-Man to make an impossible choice between love and duty.</p>
-                        <div class="rating">⭐⭐⭐⭐⭐</div>
-                        <button class="btn btn-secondary">Read Issue</button>
-                    </div>
+                <div class="world-detail" id="world-detail">
+                    <div class="world-image mars-image"><span class="world-coordinate">18° 39' N / 226° 12' E</span></div>
+                    <div class="world-copy"><p class="eyebrow">CURRENTLY OBSERVING</p><h3>Mars <em>/ Sol IV</em></h3><p id="world-description">A rust-colored archive of ancient water, dramatic dust fronts, and the clearest sunset in the system.</p><div class="world-facts"><div><span>Surface temp</span><strong id="world-temp">−63°C</strong></div><div><span>Gravity</span><strong id="world-gravity">3.71 m/s²</strong></div><div><span>Signal delay</span><strong id="world-delay">04:32 min</strong></div></div></div>
                 </div>
             </div>
         </section>
 
-        <section id="characters" class="characters-section">
-            <h2 class="section-title">KEY CHARACTERS</h2>
-            <div class="characters-grid">
-                <div class="character-card">
-                    <div class="character-avatar">🕷️</div>
-                    <h3>Spider-Man / Peter Parker</h3>
-                    <p class="role">The Hero</p>
-                    <p>A brilliant young scientist with incredible powers and the heart of a true hero.</p>
-                </div>
-
-                <div class="character-card">
-                    <div class="character-avatar">💼</div>
-                    <h3>Mary Jane Watson</h3>
-                    <p class="role">Love Interest & Ally</p>
-                    <p>An intelligent and independent woman who stands by Peter through thick and thin.</p>
-                </div>
-
-                <div class="character-card">
-                    <div class="character-avatar">📸</div>
-                    <h3>J. Jonah Jameson</h3>
-                    <p class="role">Daily Bugle Editor</p>
-                    <p>The brash editor-in-chief always chasing stories about Spider-Man's latest exploits.</p>
-                </div>
-
-                <div class="character-card">
-                    <div class="character-avatar">👵</div>
-                    <h3>Aunt May</h3>
-                    <p class="role">Family</p>
-                    <p>Peter's beloved aunt, his moral compass and greatest source of wisdom.</p>
-                </div>
-
-                <div class="character-card">
-                    <div class="character-avatar">🎨</div>
-                    <h3>Green Goblin</h3>
-                    <p class="role">Arch Nemesis</p>
-                    <p>Spider-Man's greatest enemy, a madman with advanced technology and dark intentions.</p>
-                </div>
-
-                <div class="character-card">
-                    <div class="character-avatar">👾</div>
-                    <h3>Venom</h3>
-                    <p class="role">Dark Antagonist</p>
-                    <p>A terrifying symbiotic entity that represents Spider-Man's inner darkness made manifest.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="gallery" class="gallery-section">
-            <h2 class="section-title">COMIC PANELS GALLERY</h2>
-            <div class="panels-grid">
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">POW!</p>
-                    </div>
-                </div>
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">THWIP!</p>
-                    </div>
-                </div>
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">CRASH!</p>
-                    </div>
-                </div>
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">BANG!</p>
-                    </div>
-                </div>
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">WHOOSH!</p>
-                    </div>
-                </div>
-                <div class="comic-panel">
-                    <div class="panel-content">
-                        <p class="comic-text">ZAP!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="newsletter-section">
-            <h2>STAY UPDATED</h2>
-            <p>Subscribe to get the latest Spider-Man comic releases and news!</p>
-            <form onsubmit="handleSubscribe(event)">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
+        <section class="briefing-section section-shell" id="briefing">
+            <div class="briefing-copy"><p class="eyebrow">FIELD NOTES / 18.08.26</p><h2>The universe is not waiting.</h2><p>Every signal is an invitation. Get the weekly dispatch from the people watching the sky change in real time.</p></div>
+            <form class="briefing-form" id="briefing-form"><label for="email">Your transmission address</label><div><input id="email" type="email" placeholder="you@earth" required><button class="button button-primary" type="submit">Subscribe <span>↗</span></button></div><p class="form-message" id="form-message" aria-live="polite"></p></form>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Spider-Man Comics. All rights reserved. | Your Friendly Neighborhood Comic Site 🕷️</p>
-    </footer>
-
+    <footer class="footer section-shell"><span>ORBITAL / 2026</span><span>Built for the curious</span><a href="#top">Return to top ↑</a></footer>
+    <div class="modal" id="mission-modal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" type="button" aria-label="Close telemetry">×</button><p class="eyebrow">SECURE TELEMETRY LINK</p><h2 id="modal-title">Asteria IX</h2><p id="modal-copy"></p><div class="telemetry-bars"><span style="--bar: 82%"><b>Fuel reserve</b><i></i></span><span style="--bar: 64%"><b>Signal clarity</b><i></i></span><span style="--bar: 91%"><b>Mission health</b><i></i></span></div></div></div>
     <script src="script.js"></script>
 </body>
 </html>
