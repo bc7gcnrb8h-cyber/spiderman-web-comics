@@ -74,9 +74,8 @@ document.querySelectorAll('.map-node, .ship-node').forEach(node => node.addEvent
     routeDetail.classList.add('route-flash');
 }));
 document.querySelector('#route-action').addEventListener('click', () => {
-    const missionName = selectedRoute === 'solace' ? 'Solace Array' : 'Asteria IX';
-    document.querySelector('#missions').scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => document.querySelector(`.mission-card[data-mission="${missionName}"] .mission-open`).click(), 450);
+    const missionName = { solace: 'Solace Array', asteria: 'Asteria IX' }[selectedRoute] || 'Asteria IX';
+    openMissionDetails(missionName);
 });
 
 const planetData = {
@@ -128,7 +127,8 @@ document.querySelector('#planner-form').addEventListener('submit', event => {
     const destination = document.querySelector('#planner-destination').value;
     const payload = document.querySelector('#planner-payload').value.toLowerCase();
     const planet = Object.values(planetData).find(item => item.name === destination);
-    document.querySelector('#planner-result').textContent = `OR-${Math.floor(Math.random() * 80 + 20)} ready: ${payload} on ${destination}. Transit estimate ${planet.time}.`;
+    const missionId = `OR-${Math.floor(Math.random() * 80 + 20)}`;
+    document.querySelector('#planner-result').innerHTML = `<span class="eyebrow">PROFILE ${missionId} / READY TO REVIEW</span><strong>${destination} expedition</strong><span>${payload} · ${planet.time} transit · ${planet.risk} risk</span>`;
 });
 
 let soundEnabled = false;
@@ -197,10 +197,9 @@ const missionDetails = {
     'Solace Array': { code: 'SA-03 / ACTIVE', objective: 'Solar mirror deployment', position: "Mercury shadow line", crew: '12 orbital units' },
     'Lumen Drift': { code: 'LD-21 / COMPLETE', objective: 'Deep-space sample return', position: 'Earth recovery orbit', crew: 'Lumen capsule' }
 };
-document.querySelectorAll('.mission-open').forEach(button => button.addEventListener('click', () => {
-    const card = button.closest('.mission-card');
-    const mission = card.dataset.mission;
+function openMissionDetails(mission) {
     const detail = missionDetails[mission];
+    if (!detail) return;
     document.querySelector('#modal-title').textContent = mission;
     document.querySelector('#modal-code').textContent = detail.code;
     document.querySelector('#modal-objective').textContent = detail.objective;
@@ -208,6 +207,11 @@ document.querySelectorAll('.mission-open').forEach(button => button.addEventList
     document.querySelector('#modal-crew').textContent = detail.crew;
     modalCopy.textContent = `${mission} is transmitting clean telemetry. Navigation, life support, and scientific payload are all within expected parameters.`;
     modal.hidden = false;
+}
+document.querySelectorAll('.mission-open').forEach(button => button.addEventListener('click', () => {
+    const card = button.closest('.mission-card');
+    const mission = card.dataset.mission;
+    openMissionDetails(mission);
 }));
 
 document.querySelector('#modal-close').addEventListener('click', () => { modal.hidden = true; });
