@@ -162,6 +162,59 @@ document.querySelector('#sound-toggle').addEventListener('click', event => {
 });
 updateCommandPanel();
 
+const crewForm = document.querySelector('#crew-form');
+const callSignInput = document.querySelector('#call-sign');
+const crewWelcome = document.querySelector('#crew-welcome');
+const launchCard = document.querySelector('.launch-card');
+const launchButton = document.querySelector('#launch-button');
+const launchCopy = document.querySelector('#launch-copy');
+const challengeStatus = document.querySelector('#challenge-status');
+const alertList = document.querySelector('#alert-list');
+const achievementState = JSON.parse(localStorage.getItem('orbital-achievements') || '[]');
+const badgeLabels = ['crew', 'launch', 'save', 'compare'];
+
+function unlockAchievement(name) {
+    if (!achievementState.includes(name)) achievementState.push(name);
+    localStorage.setItem('orbital-achievements', JSON.stringify(achievementState));
+    document.querySelectorAll('#badges span').forEach((badge, index) => badge.classList.toggle('unlocked', achievementState.includes(badgeLabels[index])));
+    document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
+}
+
+function addAlert(message) {
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    alertList.innerHTML = `<p class="alert-line"><span>${time}</span> ${message}</p>` + alertList.innerHTML;
+}
+
+crewForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const callSign = callSignInput.value.trim();
+    localStorage.setItem('orbital-call-sign', callSign);
+    crewWelcome.textContent = `Welcome aboard, Commander ${callSign}. Your station is ready.`;
+    challengeStatus.textContent = `Commander ${callSign} assigned`;
+    launchCopy.textContent = 'Crew confirmed. The launch window is yours.';
+    unlockAchievement('crew');
+    addAlert(`Commander ${callSign} has joined the Asteria IX crew.`);
+});
+
+const savedCallSign = localStorage.getItem('orbital-call-sign');
+if (savedCallSign) { callSignInput.value = savedCallSign; crewWelcome.textContent = `Welcome back, Commander ${savedCallSign}.`; challengeStatus.textContent = `Commander ${savedCallSign} assigned`; }
+
+launchButton.addEventListener('click', () => {
+    launchCard.classList.remove('launching');
+    void launchCard.offsetWidth;
+    launchCard.classList.add('launching');
+    launchButton.disabled = true;
+    launchButton.innerHTML = 'Launching... <span>↗</span>';
+    challengeStatus.textContent = 'Launch sequence active';
+    addAlert('Asteria IX launch sequence has begun.');
+    setTimeout(() => { launchCopy.textContent = 'Asteria IX is away. Telemetry is clean.'; launchButton.disabled = false; launchButton.innerHTML = 'Launch again <span>↗</span>'; challengeStatus.textContent = 'Mission in progress'; unlockAchievement('launch'); addAlert('Asteria IX has cleared the atmosphere.'); }, 1800);
+});
+
+if (savedDestinations.length) unlockAchievement('save');
+document.querySelectorAll('#compare-one, #compare-two').forEach(select => select.addEventListener('change', () => unlockAchievement('compare')));
+document.querySelectorAll('#badges span').forEach((badge, index) => badge.classList.toggle('unlocked', achievementState.includes(badgeLabels[index])));
+document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
+
 let secondsRemaining = 4 * 60 * 60 + 18 * 60 + 32;
 const countdown = document.querySelector('#countdown');
 setInterval(() => {
