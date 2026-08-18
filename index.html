@@ -56,6 +56,22 @@
             <button class="button button-quiet" id="scan-button" type="button">Run sensor sweep <span>↗</span></button>
         </section>
 
+        <section class="map-section section-shell" id="route-map">
+            <div class="section-heading"><div><p class="eyebrow">NAVIGATION ARRAY</p><h2>Mission routes</h2></div><span class="section-note">Select a world or spacecraft</span></div>
+            <div class="map-layout">
+                <div class="orbit-map" aria-label="Interactive map of mission routes">
+                    <div class="sun-node">SOL</div>
+                    <div class="map-orbit orbit-near"></div><div class="map-orbit orbit-far"></div><div class="map-orbit orbit-wide"></div>
+                    <button class="map-node node-mars" data-route="mars" type="button" aria-label="Inspect Mars route">MARS</button>
+                    <button class="map-node node-europa" data-route="europa" type="button" aria-label="Inspect Europa route">EUROPA</button>
+                    <button class="map-node node-titan" data-route="titan" type="button" aria-label="Inspect Titan route">TITAN</button>
+                    <button class="ship-node ship-asteria" data-route="asteria" type="button" aria-label="Inspect Asteria IX spacecraft">AX</button>
+                    <button class="ship-node ship-solace" data-route="solace" type="button" aria-label="Inspect Solace Array spacecraft">SA</button>
+                </div>
+                <div class="route-detail" id="route-detail"><p class="eyebrow">SELECTED ROUTE</p><h3 id="route-title">Asteria IX <em>/ AX-09</em></h3><p id="route-copy">Blue-moon survey craft currently crossing the Helios relay on a high-inclination route.</p><div class="route-data"><span><b id="route-distance">384M km</b>Distance from Sol</span><span><b id="route-status">● Active</b>Mission status</span></div><button class="button button-primary" id="route-action" type="button">Open mission log <span>→</span></button></div>
+            </div>
+        </section>
+
         <section class="content-section section-shell" id="missions">
             <div class="section-heading">
                 <div><p class="eyebrow">FLIGHT DECK</p><h2>Mission log</h2></div>
@@ -90,7 +106,7 @@
                     <button class="world-tab" data-world="titan" role="tab" aria-selected="false" type="button"><span class="world-dot titan-dot"></span><span>Titan</span><small>01 probe</small></button>
                 </div>
                 <div class="world-detail" id="world-detail">
-                    <div class="world-image mars-image"><span class="world-coordinate">18° 39' N / 226° 12' E</span></div>
+                    <div class="world-image mars-image"><img id="world-image" src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" alt="Mars photographed in natural color"><span class="world-coordinate">18° 39' N / 226° 12' E</span></div>
                     <div class="world-copy"><p class="eyebrow">CURRENTLY OBSERVING</p><h3>Mars <em>/ Sol IV</em></h3><p id="world-description">A rust-colored archive of ancient water, dramatic dust fronts, and the clearest sunset in the system.</p><div class="world-facts"><div><span>Surface temp</span><strong id="world-temp">−63°C</strong></div><div><span>Gravity</span><strong id="world-gravity">3.71 m/s²</strong></div><div><span>Signal delay</span><strong id="world-delay">04:32 min</strong></div></div></div>
                 </div>
             </div>

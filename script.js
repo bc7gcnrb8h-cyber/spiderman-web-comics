@@ -29,9 +29,9 @@ filters.forEach(filter => filter.addEventListener('click', () => {
 }));
 
 const worldData = {
-    mars: { title: 'Mars', coordinate: "18° 39' N / 226° 12' E", description: 'A rust-colored archive of ancient water, dramatic dust fronts, and the clearest sunset in the system.', temp: '−63°C', gravity: '3.71 m/s²', delay: '04:32 min', className: 'mars-image' },
-    europa: { title: 'Europa', coordinate: "23° 41' S / 14° 08' W", description: 'A frozen ocean world where a saltwater sea may be moving beneath the brightest ice in space.', temp: '−160°C', gravity: '1.31 m/s²', delay: '33:14 min', className: 'europa-image' },
-    titan: { title: 'Titan', coordinate: "07° 12' N / 198° 43' E", description: 'Amber haze, methane rain, and coastlines carved by chemistry unlike anything on Earth.', temp: '−179°C', gravity: '1.35 m/s²', delay: '01:23 hr', className: 'titan-image' }
+    mars: { title: 'Mars', coordinate: "18° 39' N / 226° 12' E", description: 'A rust-colored archive of ancient water, dramatic dust fronts, and the clearest sunset in the system.', temp: '−63°C', gravity: '3.71 m/s²', delay: '04:32 min', image: 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg' },
+    europa: { title: 'Europa', coordinate: "23° 41' S / 14° 08' W", description: 'A frozen ocean world where a saltwater sea may be moving beneath the brightest ice in space.', temp: '−160°C', gravity: '1.31 m/s²', delay: '33:14 min', image: 'https://upload.wikimedia.org/wikipedia/commons/5/54/Europa-moon.jpg' },
+    titan: { title: 'Titan', coordinate: "07° 12' N / 198° 43' E", description: 'Amber haze, methane rain, and coastlines carved by chemistry unlike anything on Earth.', temp: '−179°C', gravity: '1.35 m/s²', delay: '01:23 hr', image: 'https://upload.wikimedia.org/wikipedia/commons/4/45/Titan_in_true_color.jpg' }
 };
 
 const worldDetail = document.querySelector('#world-detail');
@@ -41,13 +41,35 @@ document.querySelectorAll('.world-tab').forEach(tab => tab.addEventListener('cli
         item.classList.toggle('active', item === tab);
         item.setAttribute('aria-selected', String(item === tab));
     });
-    worldDetail.querySelector('.world-image').className = `world-image ${world.className}`;
+    const worldImage = worldDetail.querySelector('#world-image');
+    worldImage.src = world.image;
+    worldImage.alt = `${world.title} photographed in natural color`;
     worldDetail.querySelector('.world-coordinate').textContent = world.coordinate;
     worldDetail.querySelector('h3').innerHTML = `${world.title} <em>/ Sol IV</em>`;
     document.querySelector('#world-description').textContent = world.description;
     document.querySelector('#world-temp').textContent = world.temp;
     document.querySelector('#world-gravity').textContent = world.gravity;
     document.querySelector('#world-delay').textContent = world.delay;
+}));
+
+const routeData = {
+    mars: { title: 'Mars', code: 'SOL IV', copy: 'Asteria IX is receiving a clean relay from the red planet survey corridor.', distance: '225M km', status: '● Active' },
+    europa: { title: 'Europa', code: 'JUPITER II', copy: 'The Europa probe is preparing a low-altitude pass over the fractured ice fields.', distance: '628M km', status: '● Active' },
+    titan: { title: 'Titan', code: 'SATURN VI', copy: 'A deep-space relay has just come online beyond Saturn\'s rings.', distance: '1.4B km', status: '● Signal acquired' },
+    asteria: { title: 'Asteria IX', code: 'AX-09', copy: 'Blue-moon survey craft currently crossing the Helios relay on a high-inclination route.', distance: '384M km', status: '● Active' },
+    solace: { title: 'Solace Array', code: 'SA-03', copy: 'Solar mirror deployment is holding formation at the edge of Mercury\'s shadow.', distance: '72M km', status: '● Active' }
+};
+const routeDetail = document.querySelector('#route-detail');
+document.querySelectorAll('.map-node, .ship-node').forEach(node => node.addEventListener('click', () => {
+    const route = routeData[node.dataset.route];
+    document.querySelectorAll('.map-node, .ship-node').forEach(item => item.classList.toggle('selected', item === node));
+    document.querySelector('#route-title').innerHTML = `${route.title} <em>/ ${route.code}</em>`;
+    document.querySelector('#route-copy').textContent = route.copy;
+    document.querySelector('#route-distance').textContent = route.distance;
+    document.querySelector('#route-status').textContent = route.status;
+    routeDetail.classList.remove('route-flash');
+    void routeDetail.offsetWidth;
+    routeDetail.classList.add('route-flash');
 }));
 
 let secondsRemaining = 4 * 60 * 60 + 18 * 60 + 32;
