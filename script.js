@@ -60,8 +60,10 @@ const routeData = {
     solace: { title: 'Solace Array', code: 'SA-03', copy: 'Solar mirror deployment is holding formation at the edge of Mercury\'s shadow.', distance: '72M km', status: '● Active' }
 };
 const routeDetail = document.querySelector('#route-detail');
+let selectedRoute = 'asteria';
 document.querySelectorAll('.map-node, .ship-node').forEach(node => node.addEventListener('click', () => {
     const route = routeData[node.dataset.route];
+    selectedRoute = node.dataset.route;
     document.querySelectorAll('.map-node, .ship-node').forEach(item => item.classList.toggle('selected', item === node));
     document.querySelector('#route-title').innerHTML = `${route.title} <em>/ ${route.code}</em>`;
     document.querySelector('#route-copy').textContent = route.copy;
@@ -71,6 +73,11 @@ document.querySelectorAll('.map-node, .ship-node').forEach(node => node.addEvent
     void routeDetail.offsetWidth;
     routeDetail.classList.add('route-flash');
 }));
+document.querySelector('#route-action').addEventListener('click', () => {
+    const missionName = selectedRoute === 'solace' ? 'Solace Array' : 'Asteria IX';
+    document.querySelector('#missions').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.querySelector(`.mission-card[data-mission="${missionName}"] .mission-open`).click(), 450);
+});
 
 const planetData = {
     mercury: { name: 'Mercury', description: 'A fast, cratered world where daylight burns and shadow freezes.', time: '3 months', risk: 'High', window: 'Open in 18 days', temp: '167°C' },
