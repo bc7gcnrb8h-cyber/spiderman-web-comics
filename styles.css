@@ -63,3 +63,5 @@ body { background:radial-gradient(circle at 80% 4%,rgba(255,205,135,.35),transpa
 .world-tab.active { background:rgba(20,100,210,.08); }
 .modal-card { background:#fff; box-shadow:0 0 50px rgba(20,100,210,.16); }
 .telemetry-bars i { background:linear-gradient(90deg,var(--blue) var(--bar),#dbe6f1 var(--bar)); }
+.hero-copy,.orbit-visual { min-width:0; }
+@media (max-width:760px) { .hero { position:relative; min-height:auto; padding:42px 0 36px; overflow:hidden; }.hero-copy { position:relative; z-index:1; }.hero h1 { max-width:500px; font-size:clamp(48px,13vw,72px); }.hero-lede { max-width:360px; font-size:15px; }.orbit-visual { position:absolute; z-index:0; top:112px; right:-150px; width:330px; opacity:.28; pointer-events:none; } }
