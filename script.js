@@ -113,10 +113,20 @@ scanButton.addEventListener('click', () => {
 
 const modal = document.querySelector('#mission-modal');
 const modalCopy = document.querySelector('#modal-copy');
+const missionDetails = {
+    'Asteria IX': { code: 'AX-09 / ACTIVE', objective: 'Ice canyon mapping', position: 'Helios relay 04', crew: 'Autonomous probe' },
+    'Solace Array': { code: 'SA-03 / ACTIVE', objective: 'Solar mirror deployment', position: "Mercury shadow line", crew: '12 orbital units' },
+    'Lumen Drift': { code: 'LD-21 / COMPLETE', objective: 'Deep-space sample return', position: 'Earth recovery orbit', crew: 'Lumen capsule' }
+};
 document.querySelectorAll('.mission-open').forEach(button => button.addEventListener('click', () => {
     const card = button.closest('.mission-card');
     const mission = card.dataset.mission;
+    const detail = missionDetails[mission];
     document.querySelector('#modal-title').textContent = mission;
+    document.querySelector('#modal-code').textContent = detail.code;
+    document.querySelector('#modal-objective').textContent = detail.objective;
+    document.querySelector('#modal-position').textContent = detail.position;
+    document.querySelector('#modal-crew').textContent = detail.crew;
     modalCopy.textContent = `${mission} is transmitting clean telemetry. Navigation, life support, and scientific payload are all within expected parameters.`;
     modal.hidden = false;
 }));
