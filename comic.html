@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man: The Midnight Guardian - Comic Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .comic-header {
+            background: linear-gradient(135deg, #ff0000, #0066ff);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 5px solid #ffcc00;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .comic-header h1 {
+            font-size: 3rem;
+            text-shadow: 3px 3px 0px #000;
+            margin-bottom: 10px;
+        }
+
+        .comic-header p {
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .comic-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .comic-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .comic-panel {
+            background: linear-gradient(135deg, #fffacd, #fff8dc);
+            border: 4px solid #000;
+            box-shadow: 5px 5px 0px #ff0000, 10px 10px 0px rgba(0, 0, 0, 0.2);
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-scene {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .panel-scene.night {
+            background: linear-gradient(135deg, #1a1a3e, #0d0d1f);
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .panel-scene.daylight {
+            background: linear-gradient(135deg, #87ceeb, #e0f6ff);
+        }
+
+        .panel-scene.fight {
+            background: linear-gradient(135deg, #ff6b6b, #ff4444);
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-5px, -5px); }
+            50% { transform: translate(5px, 5px); }
+            75% { transform: translate(-5px, 5px); }
+        }
+
+        .speech-bubble {
+            background: white;
+            border: 2px solid #000;
+            border-radius: 15px;
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-top-color: #000;
+            border-right-color: #000;
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 22px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-top-color: white;
+            border-right-color: white;
+        }
+
+        .speech-bubble.hero {
+            background: #ffe6e6;
+            border-color: #ff0000;
+        }
+
+        .speech-bubble.villain {
+            background: #e6e6ff;
+            border-color: #0066ff;
+        }
+
+        .action-text {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: -2px -2px 0 #ffcc00, 2px -2px 0 #ffcc00, -2px 2px 0 #ffcc00, 2px 2px 0 #ffcc00, 0 0 10px #ffcc00;
+            margin-top: auto;
+            transform: rotate(-5deg);
+            animation: pop 0.4s;
+        }
+
+        @keyframes pop {
+            0% { transform: rotate(-5deg) scale(0.5); opacity: 0; }
+            50% { transform: rotate(-5deg) scale(1.2); }
+            100% { transform: rotate(-5deg) scale(1); opacity: 1; }
+        }
+
+        .panel-number {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: #ffcc00;
+            color: #000;
+            padding: 3px 8px;
+            font-weight: bold;
+            border: 2px solid #000;
+            font-size: 0.8rem;
+        }
+
+        .comic-stats {
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+            font-size: 1.2rem;
+        }
+
+        .page-break {
+            text-align: center;
+            color: white;
+            margin: 50px 0 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-top: 3px dashed #ffcc00;
+            border-bottom: 3px dashed #ffcc00;
+            padding: 20px 0;
+        }
+
+        .comic-footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 30px;
+            background: #1a1a1a;
+            border-top: 4px solid #ffcc00;
+        }
+
+        .comic-footer p {
+            margin: 10px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff0000, #0066ff);
+            color: white;
+            text-decoration: none;
+            border: 3px solid #ffcc00;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        @media (max-width: 768px) {
+            .comic-page {
+                grid-template-columns: 1fr;
+            }
+
+            .comic-header h1 {
+                font-size: 2rem;
+            }
+
+            .panel-scene {
+                font-size: 2rem;
+            }
+
+            .speech-bubble {
+                font-size: 0.8rem;
+            }
+
+            .action-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="comic-header">
+        <h1>🕷️ SPIDER-MAN 🕷️</h1>
+        <p>THE MIDNIGHT GUARDIAN</p>
+        <p>An Exclusive Interactive Comic Book Story</p>
+    </div>
+
+    <div class="comic-container">
+        <!-- PAGE 1 -->
+        <div class="page-break">📖 ISSUE #SPECIAL - PAGE 1 📖</div>
+        
+        <div class="comic-page">
+            <!-- Panel 1 -->
+            <div class="comic-panel">
+                <div class="panel-number">1</div>
+                <div class="panel-scene night">🌃</div>
+                <div class="speech-bubble hero">The city never sleeps... and neither do I.</div>
+                <div class="action-text">WHOOSH!</div>
+            </div>
+
+            <!-- Panel 2 -->
+            <div class="comic-panel">
+                <div class="panel-number">2</div>
+                <div class="panel-scene night">🏢</div>
+                <div class="speech-bubble hero">A mysterious thief has been stealing from Oscorp. Someone's gotta stop them...</div>
+                <div class="action-text">THWIP!</div>
+            </div>
+
+            <!-- Panel 3 -->
+            <div class="comic-panel">
+                <div class="panel-number">3</div>
+                <div class="panel-scene night">🏭</div>
+                <div class="speech-bubble hero">My senses are tingling. There's movement three blocks away...</div>
+                <div class="action-text">ZING!</div>
+            </div>
+
+            <!-- Panel 4 -->
+            <div class="comic-panel">
+                <div class="panel-number">4</div>
+                <div class="panel-scene night">⚡</div>
+                <div class="speech-bubble hero">Time to find out what's really going on.</div>
+                <div class="action-text">BOOM!</div>
+            </div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="page-break">📖 PAGE 2 📖</div>
+
+        <div class="comic-page">
+            <!-- Panel 5 -->
+            <div class="comic-panel">
+                <div class="panel-number">5</div>
+                <div class="panel-scene night">🏚️</div>
+                <div class="speech-bubble hero">The warehouse at the docks. Perfect place for a secret operation...</div>
+                <div class="action-text">CRASH!</div>
+            </div>
+
+            <!-- Panel 6 -->
+            <div class="comic-panel">
+                <div class="panel-number">6</div>
+                <div class="panel-scene fight">⚔️</div>
+                <div class="speech-bubble villain">You're not welcome here, Spider-Man!</div>
+                <div class="action-text">POW!</div>
+            </div>
+
+            <!-- Panel 7 -->
+            <div class="comic-panel">
+                <div class="panel-number">7</div>
+                <div class="panel-scene night">🤺</div>
+                <div class="speech-bubble hero">Who are you? And what do you want with Oscorp's tech?</div>
+                <div class="action-text">BAM!</div>
+            </div>
+
+            <!-- Panel 8 -->
+            <div class="comic-panel">
+                <div class="panel-number">8</div>
+                <div class="panel-scene fight">💨</div>
+                <div class="speech-bubble villain">I'm Nova. That tech can save my brother. I have no choice!</div>
+                <div class="action-text">CLASH!</div>
+            </div>
+        </div>
+
+        <!-- PAGE 3 -->
+        <div class="page-break">📖 PAGE 3 📖</div>
+
+        <div class="comic-page">
+            <!-- Panel 9 -->
+            <div class="comic-panel">
+                <div class="panel-number">9</div>
+                <div class="panel-scene night">🌟</div>
+                <div class="speech-bubble hero">Wait... you're not a villain. You're desperate.</div>
+                <div class="action-text">WHOOSH!</div>
+            </div>
+
+            <!-- Panel 10 -->
+            <div class="comic-panel">
+                <div class="panel-number">10</div>
+                <div class="panel-scene night">💔</div>
+                <div class="speech-bubble villain">Oscorp experimented on my brother. I'm the only one who can save him!</div>
+                <div class="action-text">STOP!</div>
+            </div>
+
+            <!-- Panel 11 -->
+            <div class="comic-panel">
+                <div class="panel-number">11</div>
+                <div class="panel-scene daylight">✨</div>
+                <div class="speech-bubble hero">Then let me help you. The RIGHT way. Together we can stop them.</div>
+                <div class="action-text">HOPE!</div>
+            </div>
+
+            <!-- Panel 12 -->
+            <div class="comic-panel">
+                <div class="panel-number">12</div>
+                <div class="panel-scene daylight">🤝</div>
+                <div class="speech-bubble villain">You... you believe in me? Even after I attacked you?</div>
+                <div class="action-text">YES!</div>
+            </div>
+        </div>
+
+        <!-- PAGE 4 -->
+        <div class="page-break">📖 PAGE 4 - FINALE 📖</div>
+
+        <div class="comic-page">
+            <!-- Panel 13 -->
+            <div class="comic-panel">
+                <div class="panel-number">13</div>
+                <div class="panel-scene daylight">⚖️</div>
+                <div class="speech-bubble hero">We expose Oscorp's crimes. Evidence, witnesses, everything.</div>
+                <div class="action-text">JUSTICE!</div>
+            </div>
+
+            <!-- Panel 14 -->
+            <div class="comic-panel">
+                <div class="panel-number">14</div>
+                <div class="panel-scene daylight">🏥</div>
+                <div class="speech-bubble villain">My brother... he's going to be okay. The doctors say they can help him now!</div>
+                <div class="action-text">VICTORY!</div>
+            </div>
+
+            <!-- Panel 15 -->
+            <div class="comic-panel">
+                <div class="panel-number">15</div>
+                <div class="panel-scene daylight">🦸</div>
+                <div class="speech-bubble villain">Thank you, Spider-Man. I'm going to use my skills to help people, not hurt them.</div>
+                <div class="action-text">PROMISE!</div>
+            </div>
+
+            <!-- Panel 16 -->
+            <div class="comic-panel">
+                <div class="panel-number">16</div>
+                <div class="panel-scene night">🌙</div>
+                <div class="speech-bubble hero">Another night. Another hero found. The midnight guardian never rests.</div>
+                <div class="action-text">THE END</div>
+            </div>
+        </div>
+
+        <div class="comic-stats">
+            ⭐⭐⭐⭐⭐ 5 STARS | Story Rating: AMAZING | Pages: 4 | Panels: 16
+        </div>
+    </div>
+
+    <div class="comic-footer">
+        <p><strong>THE MIDNIGHT GUARDIAN</strong></p>
+        <p>Written by: Spider-Man Comics Team | Art by: Digital Studio</p>
+        <p>Published: August 2026 | © 2026 All Rights Reserved</p>
+        <p style="margin-top: 30px; font-size: 1rem;">
+            <strong>Lesson:</strong> Sometimes the people we see as enemies are just heroes fighting their own battles. 
+            Compassion and understanding can save lives.
+        </p>
+        <a href="index.html" class="back-button">← Back to Main Website</a>
+    </div>
+</body>
+</html>
