@@ -65,13 +65,20 @@
 
         .panel-scene {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             margin-bottom: 15px;
             position: relative;
+            min-height: 220px;
+            overflow: hidden;
+            background: #151a2d;
+        }
+
+        .panel-scene img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            object-fit: cover;
+            filter: saturate(1.1) contrast(1.05);
         }
 
         .panel-scene.night {
@@ -231,7 +238,7 @@
             }
 
             .panel-scene {
-                font-size: 2rem;
+                min-height: 190px;
             }
 
             .speech-bubble {
@@ -259,7 +266,7 @@
             <!-- Panel 1 -->
             <div class="comic-panel">
                 <div class="panel-number">1</div>
-                <div class="panel-scene night">🌃</div>
+                <div class="panel-scene night"><img src="assets/panel-01.jpg" alt="A masked web-slinging hero watching the city at night"></div>
                 <div class="speech-bubble hero">The city never sleeps... and neither do I.</div>
                 <div class="action-text">WHOOSH!</div>
             </div>
@@ -267,7 +274,7 @@
             <!-- Panel 2 -->
             <div class="comic-panel">
                 <div class="panel-number">2</div>
-                <div class="panel-scene night">🏢</div>
+                <div class="panel-scene night"><img src="assets/panel-02.jpg" alt="A web-slinging hero overlooking a glowing laboratory tower"></div>
                 <div class="speech-bubble hero">A mysterious thief has been stealing from Oscorp. Someone's gotta stop them...</div>
                 <div class="action-text">THWIP!</div>
             </div>
@@ -275,7 +282,7 @@
             <!-- Panel 3 -->
             <div class="comic-panel">
                 <div class="panel-number">3</div>
-                <div class="panel-scene night">🏭</div>
+                <div class="panel-scene night"><img src="assets/panel-03.jpg" alt="A hero moving across a shadowy industrial rooftop"></div>
                 <div class="speech-bubble hero">My senses are tingling. There's movement three blocks away...</div>
                 <div class="action-text">ZING!</div>
             </div>
@@ -283,7 +290,7 @@
             <!-- Panel 4 -->
             <div class="comic-panel">
                 <div class="panel-number">4</div>
-                <div class="panel-scene night">⚡</div>
+                <div class="panel-scene night"><img src="assets/panel-04.jpg" alt="A masked hero launching toward danger through a stormy skyline"></div>
                 <div class="speech-bubble hero">Time to find out what's really going on.</div>
                 <div class="action-text">BOOM!</div>
             </div>
@@ -296,7 +303,7 @@
             <!-- Panel 5 -->
             <div class="comic-panel">
                 <div class="panel-number">5</div>
-                <div class="panel-scene night">🏚️</div>
+                <div class="panel-scene night"><img src="assets/panel-05.jpg" alt="A mysterious warehouse at the city docks after dark"></div>
                 <div class="speech-bubble hero">The warehouse at the docks. Perfect place for a secret operation...</div>
                 <div class="action-text">CRASH!</div>
             </div>
@@ -304,7 +311,7 @@
             <!-- Panel 6 -->
             <div class="comic-panel">
                 <div class="panel-number">6</div>
-                <div class="panel-scene fight">⚔️</div>
+                <div class="panel-scene fight"><img src="assets/panel-06.jpg" alt="A web-slinging hero and masked heroine collide in a warehouse fight"></div>
                 <div class="speech-bubble villain">You're not welcome here, Spider-Man!</div>
                 <div class="action-text">POW!</div>
             </div>
@@ -312,7 +319,7 @@
             <!-- Panel 7 -->
             <div class="comic-panel">
                 <div class="panel-number">7</div>
-                <div class="panel-scene night">🤺</div>
+                <div class="panel-scene night"><img src="assets/panel-07.jpg" alt="Two masked heroes face each other among warehouse shadows"></div>
                 <div class="speech-bubble hero">Who are you? And what do you want with Oscorp's tech?</div>
                 <div class="action-text">BAM!</div>
             </div>
@@ -320,7 +327,7 @@
             <!-- Panel 8 -->
             <div class="comic-panel">
                 <div class="panel-number">8</div>
-                <div class="panel-scene fight">💨</div>
+                <div class="panel-scene fight"><img src="assets/panel-08.jpg" alt="A silver-accented masked heroine makes a fast escape through smoke"></div>
                 <div class="speech-bubble villain">I'm Nova. That tech can save my brother. I have no choice!</div>
                 <div class="action-text">CLASH!</div>
             </div>
@@ -333,7 +340,7 @@
             <!-- Panel 9 -->
             <div class="comic-panel">
                 <div class="panel-number">9</div>
-                <div class="panel-scene night">🌟</div>
+                <div class="panel-scene night"><img src="assets/panel-03.jpg" alt="The hero pauses beneath a single bright rooftop light"></div>
                 <div class="speech-bubble hero">Wait... you're not a villain. You're desperate.</div>
                 <div class="action-text">WHOOSH!</div>
             </div>
@@ -341,7 +348,7 @@
             <!-- Panel 10 -->
             <div class="comic-panel">
                 <div class="panel-number">10</div>
-                <div class="panel-scene night">💔</div>
+                <div class="panel-scene night"><img src="assets/panel-08.jpg" alt="The masked heroine reveals the pain behind her mission"></div>
                 <div class="speech-bubble villain">Oscorp experimented on my brother. I'm the only one who can save him!</div>
                 <div class="action-text">STOP!</div>
             </div>
@@ -349,7 +356,7 @@
             <!-- Panel 11 -->
             <div class="comic-panel">
                 <div class="panel-number">11</div>
-                <div class="panel-scene daylight">✨</div>
+                <div class="panel-scene daylight"><img src="assets/panel-02.jpg" alt="The hero reaches toward a hopeful new plan in daylight"></div>
                 <div class="speech-bubble hero">Then let me help you. The RIGHT way. Together we can stop them.</div>
                 <div class="action-text">HOPE!</div>
             </div>
@@ -357,7 +364,7 @@
             <!-- Panel 12 -->
             <div class="comic-panel">
                 <div class="panel-number">12</div>
-                <div class="panel-scene daylight">🤝</div>
+                <div class="panel-scene daylight"><img src="assets/panel-07.jpg" alt="The two heroes lower their guard and agree to work together"></div>
                 <div class="speech-bubble villain">You... you believe in me? Even after I attacked you?</div>
                 <div class="action-text">YES!</div>
             </div>
@@ -370,7 +377,7 @@
             <!-- Panel 13 -->
             <div class="comic-panel">
                 <div class="panel-number">13</div>
-                <div class="panel-scene daylight">⚖️</div>
+                <div class="panel-scene daylight"><img src="assets/panel-04.jpg" alt="Evidence and justice bring a corrupt corporation into the light"></div>
                 <div class="speech-bubble hero">We expose Oscorp's crimes. Evidence, witnesses, everything.</div>
                 <div class="action-text">JUSTICE!</div>
             </div>
@@ -378,7 +385,7 @@
             <!-- Panel 14 -->
             <div class="comic-panel">
                 <div class="panel-number">14</div>
-                <div class="panel-scene daylight">🏥</div>
+                <div class="panel-scene daylight"><img src="assets/panel-05.jpg" alt="A family finds hope outside a city hospital at sunrise"></div>
                 <div class="speech-bubble villain">My brother... he's going to be okay. The doctors say they can help him now!</div>
                 <div class="action-text">VICTORY!</div>
             </div>
@@ -386,7 +393,7 @@
             <!-- Panel 15 -->
             <div class="comic-panel">
                 <div class="panel-number">15</div>
-                <div class="panel-scene daylight">🦸</div>
+                <div class="panel-scene daylight"><img src="assets/panel-06.jpg" alt="The newly chosen hero stands ready to protect others"></div>
                 <div class="speech-bubble villain">Thank you, Spider-Man. I'm going to use my skills to help people, not hurt them.</div>
                 <div class="action-text">PROMISE!</div>
             </div>
@@ -394,7 +401,7 @@
             <!-- Panel 16 -->
             <div class="comic-panel">
                 <div class="panel-number">16</div>
-                <div class="panel-scene night">🌙</div>
+                <div class="panel-scene night"><img src="assets/panel-01.jpg" alt="The web-slinging hero returns to patrol beneath the midnight moon"></div>
                 <div class="speech-bubble hero">Another night. Another hero found. The midnight guardian never rests.</div>
                 <div class="action-text">THE END</div>
             </div>
@@ -407,7 +414,7 @@
 
     <div class="comic-footer">
         <p><strong>THE MIDNIGHT GUARDIAN</strong></p>
-        <p>Written by: Spider-Man Comics Team | Art by: Digital Studio</p>
+        <p>Written by: Spider-Man Comics Team | Art: AI-generated original illustrations</p>
         <p>Published: August 2026 | © 2026 All Rights Reserved</p>
         <p style="margin-top: 30px; font-size: 1rem;">
             <strong>Lesson:</strong> Sometimes the people we see as enemies are just heroes fighting their own battles. 
