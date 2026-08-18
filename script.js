@@ -178,6 +178,8 @@ function unlockAchievement(name) {
     localStorage.setItem('orbital-achievements', JSON.stringify(achievementState));
     document.querySelectorAll('#badges span').forEach((badge, index) => badge.classList.toggle('unlocked', achievementState.includes(badgeLabels[index])));
     document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
+    const rank = achievementState.length >= 4 ? 'Legendary mission commander' : achievementState.length >= 2 ? 'Flight lead' : achievementState.length >= 1 ? 'Cadet explorer' : 'Unassigned crew';
+    document.querySelector('#rank-label').textContent = rank;
 }
 
 function addAlert(message) {
@@ -210,10 +212,19 @@ launchButton.addEventListener('click', () => {
     setTimeout(() => { launchCopy.textContent = 'Asteria IX is away. Telemetry is clean.'; launchButton.disabled = false; launchButton.innerHTML = 'Launch again <span>↗</span>'; challengeStatus.textContent = 'Mission in progress'; unlockAchievement('launch'); addAlert('Asteria IX has cleared the atmosphere.'); }, 1800);
 });
 
+const anomalies = ['A repeating pulse is hiding inside the Titan relay.', 'Asteria IX detected a temporary gravity wave.', 'Unknown ice geometry found beneath Europa sector 7.', 'A soft blue signal is echoing beyond the mapped system.'];
+document.querySelector('#anomaly-button').addEventListener('click', event => {
+    event.currentTarget.textContent = 'Scanning...';
+    event.currentTarget.disabled = true;
+    setTimeout(() => { addAlert(anomalies[Math.floor(Math.random() * anomalies.length)]); event.currentTarget.textContent = 'Scan anomaly'; event.currentTarget.disabled = false; unlockAchievement('compare'); }, 900);
+});
+
 if (savedDestinations.length) unlockAchievement('save');
 document.querySelectorAll('#compare-one, #compare-two').forEach(select => select.addEventListener('change', () => unlockAchievement('compare')));
 document.querySelectorAll('#badges span').forEach((badge, index) => badge.classList.toggle('unlocked', achievementState.includes(badgeLabels[index])));
 document.querySelector('#achievement-count').textContent = `${achievementState.length} / 4 unlocked`;
+const initialRank = achievementState.length >= 4 ? 'Legendary mission commander' : achievementState.length >= 2 ? 'Flight lead' : achievementState.length >= 1 ? 'Cadet explorer' : 'Unassigned crew';
+document.querySelector('#rank-label').textContent = initialRank;
 
 let secondsRemaining = 4 * 60 * 60 + 18 * 60 + 32;
 const countdown = document.querySelector('#countdown');
